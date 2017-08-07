@@ -1,0 +1,55 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "of5xwWoxs3gKHEhGlol85SDXJi0=",
+			"path": "github.com/ChannelMeter/iso8601duration",
+			"revision": "8da3af7a2a61a4eb5ae9bddec06bf637fa9593da",
+			"revisionTime": "2015-02-04T20:18:28Z"
+		},
+		{
+			"checksumSHA1": "BCmjskha6fhGDUxvgayGZnF8RUc=",
+			"path": "github.com/Sirupsen/logrus",
+			"revision": "181d419aa9e2223811b824e8f0b4af96f9ba9302",
+			"revisionTime": "2017-07-28T07:42:14Z"
+		},
+		{
+			"checksumSHA1": "dYgiK+OBcUiMh3lqSlxYMqCBoec=",
+			"path": "github.com/adobe-platform/go-metronome/metronome",
+			"revision": "58e096fb2116b1c69509b4e107f1c223776a3dc4",
+			"revisionTime": "2017-06-06T16:20:09Z"
+		},
+		{
+			"checksumSHA1": "TRk9DUL5VjFiaYdNggZ/XE+rCkU=",
+			"path": "github.com/behance/go-logrus",
+			"revision": "eb84da520d0bfecda7a9288107ec991b4ebcedb4",
+			"revisionTime": "2015-03-02T12:28:43Z"
+		},
+		{
+			"checksumSHA1": "uGalSICR4r7354vvKuNnh7Y/R/4=",
+			"path": "github.com/urfave/cli",
+			"revision": "b99aa811b4c1dd84cc6bccb8499c82c72098085a",
+			"revisionTime": "2017-08-04T09:34:15Z"
+		},
+		{
+			"checksumSHA1": "8wbHSD24FGJUJDS1F6wbtEt8z+w=",
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": "42ff06aea7c329876e5a0fe94acc96902accf0ad",
+			"revisionTime": "2017-08-03T14:09:35Z"
+		},
+		{
+			"checksumSHA1": "fwb6FNBUs0SOyUpUx5R31Xf22GY=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "d8f5ea21b9295e315e612b4bcf4bedea93454d4d",
+			"revisionTime": "2017-08-03T09:04:06Z"
+		},
+		{
+			"checksumSHA1": "LkAsnLUlAZSg3lRYk7BEyNfog3A=",
+			"path": "golang.org/x/sys/windows",
+			"revision": "d8f5ea21b9295e315e612b4bcf4bedea93454d4d",
+			"revisionTime": "2017-08-03T09:04:06Z"
+		}
+	],
+	"rootPath": "github.com/quintoandar/docker-drone-metronome-runner"
+}
