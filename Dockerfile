@@ -1,7 +1,6 @@
 FROM golang:1.7.3
 WORKDIR /go/src/github.com/quintoandar/docker-drone-metronome-runner
 ADD . .
-RUN go get ./... 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 FROM alpine:3.6

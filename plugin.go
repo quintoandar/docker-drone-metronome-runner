@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"net/url"
+	"path"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
@@ -24,9 +26,20 @@ func (p *Plugin) Exec() error {
 		"job": p.Job,
 	}).Info("attempting to start job")
 
+	u, err := url.Parse(p.URL)
+
+	if err != nil {
+		log.WithFields(log.Fields{
+			"err": err,
+		}).Error("failed to paser dcos url")
+		return err
+	}
+
+	u.Path = path.Join(u.Path, "service/metronome")
+
 	client, err := metronome.NewClient(metronome.Config{
-		URL:            p.URL,
-		AuthToken:      p.Token,
+		URL:            u.String(),
+		AuthToken:      "token=" + p.Token,
 		Debug:          false,
 		RequestTimeout: 5,
 	})
@@ -51,13 +64,22 @@ func (p *Plugin) Exec() error {
 	}
 
 	resp, err := client.StartJob(p.Job)
-	runID := resp.(string)
 
 	if err != nil {
 		log.WithFields(log.Fields{
-			"err": err,
+			"job": p.Job,
 		}).Error("failed to start job")
+		return err
 	}
+
+	id := resp.(metronome.JobStatus).ID
+	status := resp.(metronome.JobStatus).Status
+
+	log.WithFields(log.Fields{
+		"job":    p.Job,
+		"id":     id,
+		"status": status,
+	}).Info("waiting for job to finish")
 
 	timeout := time.After(p.Timeout)
 	tick := time.Tick(10 * time.Second)
@@ -76,7 +98,7 @@ func (p *Plugin) Exec() error {
 			}
 
 		case <-tick:
-			jobStatus, err := client.StatusJob(p.Job, runID)
+			jobStatus, err := client.StatusJob(p.Job, id)
 
 			if err != nil {
 				log.WithFields(log.Fields{
@@ -89,25 +111,25 @@ func (p *Plugin) Exec() error {
 
 			if status == "Completed" {
 				log.WithFields(log.Fields{
-					"url":    p.URL,
 					"job":    p.Job,
+					"id":     id,
 					"status": status,
-				}).Info("job has completed sucesfully")
+				}).Info("job has completed successfuly")
 				return nil
 			}
 
 			if status == "Failed" {
 				log.WithFields(log.Fields{
-					"url":    p.URL,
 					"job":    p.Job,
+					"id":     id,
 					"status": status,
 				}).Error("job has failed")
 				return err
 			}
 
 			log.WithFields(log.Fields{
-				"url":    p.URL,
 				"job":    p.Job,
+				"id":     id,
 				"status": status,
 			}).Debug()
 		}
