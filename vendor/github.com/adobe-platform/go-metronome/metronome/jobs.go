@@ -1,17 +1,19 @@
 package metronome
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
-	"strings"
-	"time"
-	duration "github.com/ChannelMeter/iso8601duration"
-	"encoding/json"
+	"net/http"
 	"regexp"
 	"strconv"
+	"strings"
+	"time"
+
+	duration "github.com/ChannelMeter/iso8601duration"
 	log "github.com/behance/go-logrus"
-	"net/http"
 )
+
 // CreateJob - create a metronome job.  returns the job or an error
 func (client *Client) CreateJob(job *Job) (*Job, error) {
 	var reply Job
@@ -23,7 +25,7 @@ func (client *Client) CreateJob(job *Job) (*Job, error) {
 
 // DeleteJob - deletes a job by calling metronome api
 // DELETE /v1/jobs/$jobId
-func (client *Client)  DeleteJob(jobID string) (interface{}, error) {
+func (client *Client) DeleteJob(jobID string) (interface{}, error) {
 	var msg Job //json.RawMessage
 	_, err := client.apiDelete(fmt.Sprintf(MetronomeAPIJobDelete, jobID), nil, &msg)
 	if err != nil {
@@ -32,14 +34,14 @@ func (client *Client)  DeleteJob(jobID string) (interface{}, error) {
 	return msg, err
 
 }
+
 // GetJob - Gets a job by calling metronome api
 // GET /v1/jobs/$jobId
 func (client *Client) GetJob(jobID string) (*Job, error) {
 	var job Job
 	queryParams := map[string][]string{
-		"embed" : {
+		"embed": {
 			"historySummary",
-			"activeRuns",
 			"schedules",
 		},
 	}
@@ -50,15 +52,15 @@ func (client *Client) GetJob(jobID string) (*Job, error) {
 	return &job, err
 
 }
+
 // Jobs - get a list of all jobs by calling metronome api
 // GET /v1/jobs
-func (client *Client)  Jobs() (*[]Job, error) {
+func (client *Client) Jobs() (*[]Job, error) {
 	//	jobs := new(Jobs)
 	jobs := make([]Job, 0, 0)
 	queryParams := map[string][]string{
-		"embed" : {
+		"embed": {
 			"historySummary",
-			"activeRuns",
 		},
 	}
 
@@ -70,16 +72,15 @@ func (client *Client)  Jobs() (*[]Job, error) {
 	return &jobs, nil
 }
 
-
 // UpdateJob - given jobID and new job structure, replace an existing job by calling metronome api
 // PUT /v1/jobs/$jobId
 func (client *Client) UpdateJob(jobID string, job *Job) (interface{}, error) {
 	var msg json.RawMessage
 	_, err := client.apiPut(fmt.Sprintf(MetronomeAPIJobUpdate, jobID), nil, job, &msg)
-			if err != nil {
+	if err != nil {
 		bbb, err2 := json.Marshal(msg)
-				if err2 != nil {
-					return nil, fmt.Errorf("JobUpdate error %s\n\tAnd %s", err.Error(), err2.Error())
+		if err2 != nil {
+			return nil, fmt.Errorf("JobUpdate error %s\n\tAnd %s", err.Error(), err2.Error())
 		}
 		return nil, fmt.Errorf("JobUpdate error %s\n%s", err, string(bbb))
 
@@ -95,13 +96,12 @@ func (client *Client) Runs(jobID string, since int64) (*Job, error) {
 	var jobs Job
 	queryParams := map[string][]string{
 		"_timestamp": {
-			strconv.FormatInt(since , 10),
-//			strconv.FormatInt(time.Now().UnixNano() / int64(time.Millisecond) - 24 * 3600000, 10),
+			strconv.FormatInt(since, 10),
+			//			strconv.FormatInt(time.Now().UnixNano() / int64(time.Millisecond) - 24 * 3600000, 10),
 		},
-		"embed" : {
+		"embed": {
 			"history",
 			"historySummary",
-			"activeRuns",
 			"schedules",
 		},
 	}
@@ -112,6 +112,7 @@ func (client *Client) Runs(jobID string, since int64) (*Job, error) {
 	}
 	return &jobs, nil
 }
+
 // RunLs  - list running jobs - standard
 func (client *Client) RunLs(jobID string) (*[]JobStatus, error) {
 	jobs := make([]JobStatus, 0, 0)
@@ -123,6 +124,7 @@ func (client *Client) RunLs(jobID string) (*[]JobStatus, error) {
 	}
 	return &jobs, nil
 }
+
 // StartJob - starts a metronome job.  Implies that CreateJob was already called.
 // POST /v1/jobs/$jobId/runs
 func (client *Client) StartJob(jobID string) (interface{}, error) {
@@ -132,9 +134,10 @@ func (client *Client) StartJob(jobID string) (interface{}, error) {
 	}
 	return msg, nil
 }
+
 // StatusJob - get a job status
 // GET /v1/jobs/$jobId/runs/$runId
-func (client *Client)  StatusJob(jobID string, runID string) (*JobStatus, error) {
+func (client *Client) StatusJob(jobID string, runID string) (*JobStatus, error) {
 	var job JobStatus
 
 	_, err := client.apiGet(fmt.Sprintf(MetronomeAPIJobRunStatus, jobID, runID), nil, &job)
@@ -177,13 +180,14 @@ func (client *Client) GetSchedule(jobID string, schedID string) (*Schedule, erro
 	var sched Schedule
 
 	_, err := client.apiGet(fmt.Sprintf(MetronomeAPIJobScheduleStatus, jobID, schedID), nil, &sched)
-		if err != nil {
+	if err != nil {
 		return nil, err
 	}
 	fmt.Printf("sched: %+v\n", sched)
 	return &sched, err
 
 }
+
 // Schedules - get all schedules
 // GET /v1/jobs/$jobId/schedules
 func (client *Client) Schedules(jobID string) (*[]Schedule, error) {
@@ -211,6 +215,7 @@ func (client *Client) DeleteSchedule(jobID string, schedID string) (interface{},
 	return msg, err
 
 }
+
 // UpdateSchedule - update an existing schedule associated with a job
 // PUT /v1/jobs/$jobId/schedules/$scheduleId
 func (client *Client) UpdateSchedule(jobID string, schedID string, sched *Schedule) (interface{}, error) {
@@ -227,6 +232,7 @@ func (client *Client) UpdateSchedule(jobID string, schedID string, sched *Schedu
 	return sched, nil
 
 }
+
 // Metrics - returns metrics from the metronome service
 //  GET  /v1/metrics
 func (client *Client) Metrics() (interface{}, error) {
@@ -267,7 +273,6 @@ func formatTimeString(t time.Time) string {
 
 	return t.Format(time.RFC3339Nano)
 }
-
 
 ///
 var (
@@ -338,6 +343,7 @@ func ConvertIso8601ToCron(isoRep string) (string, error) {
 
 	return "", errors.New("Unknown error")
 }
+
 // ImmediateCrontab - generates a point in time crontab
 func ImmediateCrontab() string {
 	var (
@@ -349,11 +355,12 @@ func ImmediateCrontab() string {
 	}
 	return fmt.Sprintf("%d %d %d %d * %d", m, h, d, M, y)
 }
+
 // ImmediateSchedule - create a metronome schedule
 func ImmediateSchedule() (*Schedule, error) {
 	var (
 		y, M, d, h, m, s int
-		cronstr string
+		cronstr          string
 	)
 	_, err := fmt.Sscanf(time.Now().Format(time.RFC3339), "%d-%d-%dT%d:%d:%dZ", &y, &M, &d, &h, &m, &s)
 	if err != nil {
@@ -362,12 +369,12 @@ func ImmediateSchedule() (*Schedule, error) {
 	cronstr = fmt.Sprintf("%d %d %d %d * %d", m, h, d, M, y)
 
 	sched := &Schedule{
-		ID:  fmt.Sprintf("%d%d%d%d%d%d ", y, M, d, h, m, s), //"everyminute",
-		Cron: cronstr, //"cron": "* * * * *",
-		ConcurrencyPolicy: "ALLOW",
-		Enabled: true,
-		StartingDeadlineSeconds:60,
-		Timezone: "GMT",
+		ID:                      fmt.Sprintf("%d%d%d%d%d%d ", y, M, d, h, m, s), //"everyminute",
+		Cron:                    cronstr,                                        //"cron": "* * * * *",
+		ConcurrencyPolicy:       "ALLOW",
+		Enabled:                 true,
+		StartingDeadlineSeconds: 60,
+		Timezone:                "GMT",
 	}
 	return sched, nil
 }

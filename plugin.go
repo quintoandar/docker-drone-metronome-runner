@@ -5,7 +5,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/adobe-platform/go-metronome/metronome"
+	"github.com/fbcbarbosa/go-metronome/metronome"
 )
 
 // Plugin defines the beanstalk plugin parameters.

@@ -15,10 +15,10 @@
 			"revisionTime": "2017-07-28T07:42:14Z"
 		},
 		{
-			"checksumSHA1": "dYgiK+OBcUiMh3lqSlxYMqCBoec=",
+			"checksumSHA1": "Hfn/YtR0Dg8L8QDeQIEMRrDbT90=",
 			"path": "github.com/adobe-platform/go-metronome/metronome",
-			"revision": "58e096fb2116b1c69509b4e107f1c223776a3dc4",
-			"revisionTime": "2017-06-06T16:20:09Z"
+			"revision": "2a398324116c8385e990685a96b34671f892104e",
+			"revisionTime": "2017-08-07T22:42:57Z"
 		},
 		{
 			"checksumSHA1": "TRk9DUL5VjFiaYdNggZ/XE+rCkU=",
@@ -39,7 +39,7 @@
 			"revisionTime": "2017-08-03T14:09:35Z"
 		},
 		{
-			"checksumSHA1": "fwb6FNBUs0SOyUpUx5R31Xf22GY=",
+			"checksumSHA1": "NqlOcIqzDg46JUFFXqZdKUER0B0=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "d8f5ea21b9295e315e612b4bcf4bedea93454d4d",
 			"revisionTime": "2017-08-03T09:04:06Z"

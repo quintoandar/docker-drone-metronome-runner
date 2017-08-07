@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	log "github.com/behance/go-logrus"
 	"io/ioutil"
 	"net/http"
 	"net/http/httputil"
@@ -14,6 +13,8 @@ import (
 	"path"
 	"strings"
 	"time"
+
+	log "github.com/behance/go-logrus"
 )
 
 // Constants to represent HTTP verbs
