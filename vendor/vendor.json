@@ -4,9 +4,10 @@
 	"package": [
 		{
 			"checksumSHA1": "of5xwWoxs3gKHEhGlol85SDXJi0=",
+			"origin": "github.com/fbcbarbosa/go-metronome/vendor/github.com/ChannelMeter/iso8601duration",
 			"path": "github.com/ChannelMeter/iso8601duration",
-			"revision": "8da3af7a2a61a4eb5ae9bddec06bf637fa9593da",
-			"revisionTime": "2015-02-04T20:18:28Z"
+			"revision": "2a398324116c8385e990685a96b34671f892104e",
+			"revisionTime": "2017-08-07T22:42:57Z"
 		},
 		{
 			"checksumSHA1": "BCmjskha6fhGDUxvgayGZnF8RUc=",
@@ -15,16 +16,17 @@
 			"revisionTime": "2017-07-28T07:42:14Z"
 		},
 		{
-			"checksumSHA1": "Hfn/YtR0Dg8L8QDeQIEMRrDbT90=",
-			"path": "github.com/adobe-platform/go-metronome/metronome",
+			"checksumSHA1": "TRk9DUL5VjFiaYdNggZ/XE+rCkU=",
+			"origin": "github.com/fbcbarbosa/go-metronome/vendor/github.com/behance/go-logrus",
+			"path": "github.com/behance/go-logrus",
 			"revision": "2a398324116c8385e990685a96b34671f892104e",
 			"revisionTime": "2017-08-07T22:42:57Z"
 		},
 		{
-			"checksumSHA1": "TRk9DUL5VjFiaYdNggZ/XE+rCkU=",
-			"path": "github.com/behance/go-logrus",
-			"revision": "eb84da520d0bfecda7a9288107ec991b4ebcedb4",
-			"revisionTime": "2015-03-02T12:28:43Z"
+			"checksumSHA1": "FW9OzYunnc9xCALP/mzYdXTAfK8=",
+			"path": "github.com/fbcbarbosa/go-metronome/metronome",
+			"revision": "2a398324116c8385e990685a96b34671f892104e",
+			"revisionTime": "2017-08-07T22:42:57Z"
 		},
 		{
 			"checksumSHA1": "uGalSICR4r7354vvKuNnh7Y/R/4=",
@@ -39,7 +41,7 @@
 			"revisionTime": "2017-08-03T14:09:35Z"
 		},
 		{
-			"checksumSHA1": "NqlOcIqzDg46JUFFXqZdKUER0B0=",
+			"checksumSHA1": "fwb6FNBUs0SOyUpUx5R31Xf22GY=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "d8f5ea21b9295e315e612b4bcf4bedea93454d4d",
 			"revisionTime": "2017-08-03T09:04:06Z"
