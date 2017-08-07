@@ -44,7 +44,6 @@ func (p *Plugin) Exec() error {
 		log.WithFields(log.Fields{
 			"err": err,
 		}).Error("failed to retrieve available jobs")
-
 	}
 
 	for _, j := range *jobs {
@@ -83,6 +82,7 @@ func (p *Plugin) Exec() error {
 				log.WithFields(log.Fields{
 					"err": err,
 				}).Error("failed to get job status")
+				return err
 			}
 
 			status := jobStatus.Status
