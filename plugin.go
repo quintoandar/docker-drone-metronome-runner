@@ -73,19 +73,24 @@ func (p *Plugin) Exec() error {
 	}
 
 	id := resp.(metronome.JobStatus).ID
-	status := resp.(metronome.JobStatus).Status
 
 	log.WithFields(log.Fields{
-		"job":    p.Job,
-		"id":     id,
-		"status": status,
-	}).Info("waiting for job to finish")
+		"job": p.Job,
+		"id":  id,
+	}).Info("job is starting")
 
 	timeout := time.After(p.Timeout)
 	tick := time.Tick(10 * time.Second)
+	printTick := time.Tick(1 * time.Minute)
 
 	for {
 		select {
+
+		case <-printTick:
+			log.WithFields(log.Fields{
+				"job": p.Job,
+				"id":  id,
+			}).Info("waiting for job to finish")
 
 		case <-timeout:
 			err := errors.New("timed out")
@@ -100,37 +105,52 @@ func (p *Plugin) Exec() error {
 		case <-tick:
 			jobStatus, err := client.StatusJob(p.Job, id)
 
+			// if err, it means that the job is not running and might have finished
 			if err != nil {
+
 				log.WithFields(log.Fields{
 					"err": err,
-				}).Error("failed to get job status")
-				return err
-			}
+				}).Info("job is not running")
 
-			status := jobStatus.Status
+				job, err := client.GetJob(p.Job)
 
-			if status == "Completed" {
-				log.WithFields(log.Fields{
-					"job":    p.Job,
-					"id":     id,
-					"status": status,
-				}).Info("job has completed successfuly")
-				return nil
-			}
+				if err != nil {
+					log.WithFields(log.Fields{
+						"error": err,
+					}).Error("failed to get job status")
+					return err
+				}
 
-			if status == "Failed" {
-				log.WithFields(log.Fields{
-					"job":    p.Job,
-					"id":     id,
-					"status": status,
-				}).Error("job has failed")
-				return err
+				if job.History == nil {
+					return errors.New("failed to get job history")
+				}
+
+				if job.History.SuccessfulFinishedRuns != nil {
+					for _, run := range job.History.SuccessfulFinishedRuns {
+						if run.ID == id {
+							log.Info("job has completed successfully")
+							return nil
+						}
+					}
+				} else {
+					log.Warn("no sucessful runs were found for this job")
+				}
+
+				if job.History.FailedFinishedRuns != nil {
+					for _, run := range job.History.FailedFinishedRuns {
+						if run.ID == id {
+							return errors.New("job has failed")
+						}
+					}
+				}
+
+				return errors.New("run was not found on job history")
 			}
 
 			log.WithFields(log.Fields{
 				"job":    p.Job,
 				"id":     id,
-				"status": status,
+				"status": jobStatus.Status,
 			}).Debug()
 		}
 	}

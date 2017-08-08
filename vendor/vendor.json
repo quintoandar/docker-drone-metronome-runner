@@ -6,8 +6,8 @@
 			"checksumSHA1": "of5xwWoxs3gKHEhGlol85SDXJi0=",
 			"origin": "github.com/fbcbarbosa/go-metronome/vendor/github.com/ChannelMeter/iso8601duration",
 			"path": "github.com/ChannelMeter/iso8601duration",
-			"revision": "2a398324116c8385e990685a96b34671f892104e",
-			"revisionTime": "2017-08-07T22:42:57Z"
+			"revision": "2b0f0ed7ddb911e261015cef90b3b4dd4916d231",
+			"revisionTime": "2017-08-08T14:37:11Z"
 		},
 		{
 			"checksumSHA1": "BCmjskha6fhGDUxvgayGZnF8RUc=",
@@ -19,14 +19,14 @@
 			"checksumSHA1": "TRk9DUL5VjFiaYdNggZ/XE+rCkU=",
 			"origin": "github.com/fbcbarbosa/go-metronome/vendor/github.com/behance/go-logrus",
 			"path": "github.com/behance/go-logrus",
-			"revision": "2a398324116c8385e990685a96b34671f892104e",
-			"revisionTime": "2017-08-07T22:42:57Z"
+			"revision": "2b0f0ed7ddb911e261015cef90b3b4dd4916d231",
+			"revisionTime": "2017-08-08T14:37:11Z"
 		},
 		{
-			"checksumSHA1": "FW9OzYunnc9xCALP/mzYdXTAfK8=",
+			"checksumSHA1": "xcJRnqoNMfRgyX/rXvZo+E8hMm0=",
 			"path": "github.com/fbcbarbosa/go-metronome/metronome",
-			"revision": "2a398324116c8385e990685a96b34671f892104e",
-			"revisionTime": "2017-08-07T22:42:57Z"
+			"revision": "2b0f0ed7ddb911e261015cef90b3b4dd4916d231",
+			"revisionTime": "2017-08-08T14:37:11Z"
 		},
 		{
 			"checksumSHA1": "uGalSICR4r7354vvKuNnh7Y/R/4=",

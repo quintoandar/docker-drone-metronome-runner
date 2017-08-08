@@ -41,6 +41,7 @@ func (client *Client) GetJob(jobID string) (*Job, error) {
 	var job Job
 	queryParams := map[string][]string{
 		"embed": {
+			"history",
 			"historySummary",
 			"schedules",
 		},
