@@ -19,3 +19,4 @@ pipeline:
     secrets: [ github_token ]
     when:
       local: false
+
