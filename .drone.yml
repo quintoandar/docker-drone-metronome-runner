@@ -1,0 +1,21 @@
+workspace:
+  base: /go
+  path: src/github.com/quintoandar/drone-metronome-runner
+
+pipeline:
+  test:
+    image: golang:1.8
+    commands:
+      - go vet
+      - go test -cover -coverprofile=coverage.out
+
+  build:
+    image: golang:1.8
+    commands: CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+
+  coverage:
+    image: plugins/coverage
+    server: http://aircover.sandbox.blackops.quintoandar.com.br
+    secrets: [ github_token ]
+    when:
+      local: false
