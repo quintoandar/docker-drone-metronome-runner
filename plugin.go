@@ -31,11 +31,11 @@ func (p *Plugin) Exec() error {
 	if err != nil {
 		log.WithFields(log.Fields{
 			"err": err,
-		}).Error("failed to paser dcos url")
+		}).Error("failed to parser dcos url")
 		return err
 	}
 
-	u.Path = path.Join(u.Path, "service/metronome")
+	u.Path = path.Join(u.Path)
 
 	client, err := metronome.NewClient(metronome.Config{
 		URL:            u.String(),
